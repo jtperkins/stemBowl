@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/aspnetcoreapp.csproj"
+                "${workspaceFolder}/stembowl.csproj"
             ],
             "problemMatcher": "$msCompile"
         }
