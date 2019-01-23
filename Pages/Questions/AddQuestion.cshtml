@@ -1,0 +1,16 @@
+@page
+@model AddQuestionModel
+@{
+    ViewData["Title"] = "Submit Question";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<p>Enter Order Information Below:</p>
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        </form>
+    </div>
+</div>
