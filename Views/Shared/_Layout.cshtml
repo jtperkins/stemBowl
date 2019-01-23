@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Tephra System Editor</title>
+    <environment include="Development">
+        <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+        <link rel="stylesheet" href="~/css/site.css" />
+    </environment>
+
+    <environment exclude="Development">
+        <link rel="stylesheet"
+              href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+              integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+              crossorigin="anonymous"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only"
+              asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    </environment>  
+
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark navbar-expand-lg  fixed-top">
+            <div class="navbar-header">
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Stem Bowl</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-layout" aria-controls="navbar-layout" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+            </div>
+            <div class=" collapse navbar-collapse" id="navbar-layout">
+                <ul class="nav navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li class="nav-link"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li class="nav-link"><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+                    <li class="nav-link"><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                </ul>
+            </div>
+                <partial name="_LoginPartial"/>
+    </nav>
+
+    <partial name="_CookieConsentPartial" />
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+
+        </footer>
+    </div>
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.slim.js"></script>
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+    <link src="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+        integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" 
+        crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+            asp-fallback-test="window.jQuery"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous">
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            asp-fallback-src="~/lib/popper.js/dist/umd/popper.min.js"
+            asp-fallback-test="window.Popper" 
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous">
+    </script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+            asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+            asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+            integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+            crossorigin="anonymous">
+    </script>
+
+    <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment> 
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
