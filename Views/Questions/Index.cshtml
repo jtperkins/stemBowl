@@ -1,0 +1,11 @@
+@model List<Question>
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
+
+<hr />
+@foreach(var question in Model)
+{
+    @Html.DisplayFor(q => question)
+}
+
+@Html.ActionLink("Create", "Create", new { userID=@UserManager.GetUserId(User)})

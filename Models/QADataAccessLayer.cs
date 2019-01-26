@@ -9,6 +9,7 @@ namespace stembowl.Models
     public class QADataAccessLayer
     {
         string connectionString = "server=db;port=3306;userid=dbuser;password=dbuserpassword;database=accountowner;";
+        
 
         public IEnumerable<Question> GetAllQuestions()
         {
@@ -27,7 +28,8 @@ namespace stembowl.Models
                 while(rdrQuestions.Read())
                 {
                     var question = new Question();
-                    
+
+                    question.SubmitterID = rdrQuestions.GetString("SumbitterID");                   
                     question.QuestionID = rdrQuestions.GetInt32("QuestionID");
                     question.Text = rdrQuestions.GetString("Text");
                     question.Format = (Format)rdrQuestions.GetInt32("Format");
@@ -69,16 +71,17 @@ namespace stembowl.Models
             return answers;
         }
     
-        public void AddQuestion(Question question)
+        public void Add(Question question)
         {
             
             using(var con = new MySql.Data.MySqlClient.MySqlConnection(connectionString))
             {
                 var cmd = new MySql.Data.MySqlClient.MySqlCommand
-                ("INSERT INTO Questions(Format, Text) VALUES(@Format, @Text)", con);
+                ("INSERT INTO Questions(Format, Text, SumbitterID) VALUES(@Format, @Text, @SubmitterID)", con);
                 cmd.CommandType = CommandType.Text;
                 cmd.Parameters.AddWithValue("@Text", question.Text);
                 cmd.Parameters.AddWithValue("@Format", (int) question.Format);
+                cmd.Parameters.AddWithValue("@SumbitterID", question.SubmitterID);
 
                 con.Open();
                 cmd.ExecuteNonQuery();

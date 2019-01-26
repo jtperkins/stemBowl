@@ -15,32 +15,33 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+--
+-- Table structure for table `Answer`
+--
+
 USE accountowner;
 
---
--- Table structure for table `Answers`
---
-
-DROP TABLE IF EXISTS `Answers`;
+DROP TABLE IF EXISTS `Answer`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Answers` (
+CREATE TABLE `Answer` (
   `AnswerID` int(11) NOT NULL AUTO_INCREMENT,
   `QuestionID` int(11) NOT NULL,
   `Text` longtext,
   PRIMARY KEY (`AnswerID`),
   UNIQUE KEY `IX_Answers_QuestionID` (`QuestionID`),
   CONSTRAINT `FK_Answers_Questions_QuestionID` FOREIGN KEY (`QuestionID`) REFERENCES `Questions` (`QuestionID`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Answers`
+-- Dumping data for table `Answer`
 --
 
-LOCK TABLES `Answers` WRITE;
-/*!40000 ALTER TABLE `Answers` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Answers` ENABLE KEYS */;
+LOCK TABLES `Answer` WRITE;
+/*!40000 ALTER TABLE `Answer` DISABLE KEYS */;
+INSERT INTO `Answer` VALUES (1,2,'asdfff'),(2,3,'FOR REALS?');
+/*!40000 ALTER TABLE `Answer` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -251,8 +252,9 @@ CREATE TABLE `Questions` (
   `QuestionID` int(11) NOT NULL AUTO_INCREMENT,
   `Text` longtext,
   `Format` int(11) NOT NULL,
+  `SubmitterID` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`QuestionID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -261,6 +263,7 @@ CREATE TABLE `Questions` (
 
 LOCK TABLES `Questions` WRITE;
 /*!40000 ALTER TABLE `Questions` DISABLE KEYS */;
+INSERT INTO `Questions` VALUES (2,'asdf',0,'8eafa14c-14e8-4a3d-88bd-1cd7e58788ea'),(3,'FUCCCKKING REALLY',0,'8eafa14c-14e8-4a3d-88bd-1cd7e58788ea');
 /*!40000 ALTER TABLE `Questions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -297,4 +300,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-01-24 17:09:01
+-- Dump completed on 2019-01-26 14:36:35

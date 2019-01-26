@@ -1,0 +1,9 @@
+@model Question
+
+@Html.HiddenFor(q => q.QuestionID)
+@Html.HiddenFor(q => q.SubmitterID)
+
+@Html.TextAreaFor(q => q.Text)
+@Html.DropDownListFor(q => q.Format, new SelectList(Enum.GetValues(typeof(Format))))
+
+@Html.EditorFor(q => q.Answers)

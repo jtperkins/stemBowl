@@ -1,0 +1,12 @@
+@model Question
+
+<!-- fix formatting -->
+
+<div class="row">
+    @Html.HiddenFor(q => q.QuestionID)
+    @Html.HiddenFor(q => q.SubmitterID)
+    @Model.Text
+    @Model.Format
+
+    @Html.DisplayFor(q => q.Answers)
+</div>

@@ -1,0 +1,10 @@
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <li class="nav-link">
+        @Html.ActionLink("Submit Questions", "Index", "Questions")
+    </li>
+}

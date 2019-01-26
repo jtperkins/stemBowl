@@ -1,0 +1,7 @@
+@model Answer
+
+<!-- jquery for this stuff I guess? Maybe this should be in answers-->
+@Html.HiddenFor(a => a.AnswerID)
+@Html.HiddenFor(a => a.QuestionID)
+@Html.TextAreaFor(a => a.Text)
+
