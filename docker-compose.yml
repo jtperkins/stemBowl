@@ -15,19 +15,21 @@ services:
     restart: always
   
   stembowl:
-#    environment:
-#      - ASPNETCORE_ENVIRONMENT=Development
-#      - ASPNETCORE_URLS=https://*:443;http://*:80
-#      - ASPNETCORE_HTTPS_PORT=44349
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://*:443;http://*:80
+      - ASPNETCORE_HTTPS_PORT=44349
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=crypticpassword
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/root/.aspnet/https/stembowl.pfx
     depends_on:
     - db
     image: stembowl
     build: ./
     ports:
     - "8080:80"
-#    - "44349:443"
+    - "44349:443"
     volumes:
-      - ./DataProtection-Keys/:/root/.aspnet/DataProtection-Keys/
-
+      - ~/.microsoft/usersecrets/:/root/.microsoft/usersecrets
+      - ~/.aspnet/https:/root/.aspnet/https/
 volumes:
     dbdata:
