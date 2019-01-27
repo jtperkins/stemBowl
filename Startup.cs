@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -38,6 +39,14 @@ namespace stembowl
                 opt => opt.UseMySql(Configuration.GetConnectionString("connectionString"))
             );
 
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 5;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+            });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -55,11 +64,10 @@ namespace stembowl
                 app.UseHsts();
             }
 
-            //app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
 
             app.UseMvc(routes =>
             {
