@@ -17,7 +17,6 @@ namespace stembowl.Controllers
     public class QuestionsController : Controller
     { 
         List<Question> questions {get; set;}
-        QADataAccessLayer QAdb  = new QADataAccessLayer();
 
         QuestionDbContext _context;
 
