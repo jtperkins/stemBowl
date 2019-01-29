@@ -19,7 +19,7 @@ namespace stembowl.Areas.Identity
                     options.UseMySql(
                         context.Configuration.GetConnectionString("connectionString")));
 
-                services.AddDefaultIdentity<IdentityUser>()
+                services.AddIdentity<IdentityUser, IdentityRole>()
                     .AddEntityFrameworkStores<stembowlIdentityDbContext>();
             });
         }

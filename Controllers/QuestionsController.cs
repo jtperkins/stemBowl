@@ -57,5 +57,12 @@ namespace stembowl.Controllers
 
             return View();
         }
+
+        [Authorize(Roles = "Administrator")]
+        public ActionResult GetAll()
+        {
+            questions = _context.Questions.ToList();
+            return View(questions);
+        }
     }
 }
