@@ -3,7 +3,25 @@
 @Html.HiddenFor(q => q.QuestionID)
 @Html.HiddenFor(q => q.SubmitterID)
 
+@Html.LabelFor(q => q.Text)
 @Html.TextAreaFor(q => q.Text)
-@Html.DropDownListFor(q => q.Format, new SelectList(Enum.GetValues(typeof(Format))))
-
-@Html.EditorFor(q => q.Answers)
+@Html.LabelFor(q => q.Format)
+<select data-val="true" data-val-required="The Format field is required." id="Format" name="Format">
+    <option value="MultipleChoice" selected="selected">Multiple Choice</option>
+    <option value="ShortAnswer">Short Answer</option>
+    <option value="TrueFalse">True/False</option>
+</select>
+<div class="answers">
+    <div class="MultipleChoice">
+    @Html.LabelFor(q => q.Answers) 
+    @Html.EditorFor(q => q.Answers)
+    </div>
+    <div class="ShortAnswer">
+    @Html.LabelFor(q => q.Answers) 
+    @Html.EditorFor(q => q.Answers)
+    </div>
+    <div class="TrueFalse">
+    @Html.LabelFor(q => q.Answers) 
+    @Html.EditorFor(q => q.Answers)
+    </div>
+</div>

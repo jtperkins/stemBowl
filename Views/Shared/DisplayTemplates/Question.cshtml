@@ -5,8 +5,15 @@
 <div class="row">
     @Html.HiddenFor(q => q.QuestionID)
     @Html.HiddenFor(q => q.SubmitterID)
-    @Model.Text
-    @Model.Format
+    <div class="col-md-2">
+        @Model.Text
+    </div>
+    <div class="col-md-2">
+        @Model.Format
+    </div>
 
-    @Html.DisplayFor(q => q.Answers)
+    @foreach (var answer in Model.Answers)
+    {
+        @answer.Text   
+    }
 </div>

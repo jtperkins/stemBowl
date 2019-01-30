@@ -11,6 +11,7 @@ namespace stembowl.Models
     {
         public QuestionDbContext(DbContextOptions opt):base(opt) { }
         public DbSet<Question> Questions { get; set;}
+        public DbSet<Answer> Answer { get; set;}
 
     }
 }
