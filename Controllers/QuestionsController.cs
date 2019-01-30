@@ -28,6 +28,8 @@ namespace stembowl.Controllers
         public ActionResult Index()
         {
             questions = _context.Questions.Where( e => e.SubmitterID == User.GetUserId()).ToList();
+            foreach(var question in questions)
+                question.Answers = _context.Answer.Where( e => e.QuestionID == question.QuestionID).ToList();
             return View(questions);
         }
 
@@ -56,6 +58,17 @@ namespace stembowl.Controllers
             }
 
             return View();
+        }
+
+        public ActionResult Delete(int questionID)
+        {
+            //There -has- to be a better way to do this
+            Answer[] answers = _context.Answer.Where(e => e.QuestionID == questionID).ToArray();
+            _context.Answer.RemoveRange(answers);
+            _context.Questions.Remove( _context.Questions.Where(e => e.QuestionID == questionID).FirstOrDefault());
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
         [Authorize(Roles = "Administrator")]
