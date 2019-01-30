@@ -6,6 +6,7 @@
 @foreach(var question in Model)
 {
     @Html.DisplayFor(q => question)
+    @Html.ActionLink("Delete", "Delete", new { questionId=@question.QuestionID })
 }
 
 @Html.ActionLink("Create", "Create", new { userID=@UserManager.GetUserId(User)})
