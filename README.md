@@ -9,3 +9,7 @@ to
 and
         ASPNETCORE_Kestrel__Certificates__Default__Password=crypticpassword
 to your cert passkey
+
+
+
+You need to have npm installed and run npm install in the wwwroot folder for the reactive interfaces. Working on automating this and including it in the docker build, but I wanted to remove the libraries from the repository.
