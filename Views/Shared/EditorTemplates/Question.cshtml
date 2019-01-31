@@ -2,26 +2,70 @@
 
 @Html.HiddenFor(q => q.QuestionID)
 @Html.HiddenFor(q => q.SubmitterID)
-
-@Html.LabelFor(q => q.Text)
-@Html.TextAreaFor(q => q.Text)
-@Html.LabelFor(q => q.Format)
-<select data-val="true" data-val-required="The Format field is required." id="Format" name="Format">
-    <option value="MultipleChoice" selected="selected">Multiple Choice</option>
-    <option value="ShortAnswer">Short Answer</option>
-    <option value="TrueFalse">True/False</option>
-</select>
-<div class="answers">
-    <div class="MultipleChoice">
-    @Html.LabelFor(q => q.Answers) 
-    @Html.EditorFor(q => q.Answers)
+<div class="row">
+    <div class="col">
+        <div class="row">
+            @Html.Label("Text", "Question", new { @class="col-lg-2"})
+            @Html.TextAreaFor(q => q.Text, new { @class="col"})
+        </div>
+        <div class="row">
+            @Html.LabelFor(q => q.Format, new { @class="col-lg-2"})
+            <select class="col" data-val="true" data-val-required="The Format field is required." id="Format" name="Format">
+                <option value="MultipleChoice" selected="selected">Multiple Choice</option>
+                <option value="ShortAnswer" >Short Answer</option>
+                <option value="TrueFalse"> True/False</option>
+            </select>
+        </div>
     </div>
-    <div class="ShortAnswer">
-    @Html.LabelFor(q => q.Answers) 
-    @Html.EditorFor(q => q.Answers)
+<div class="answers col align-items-center">
+    <div class="row" id="MultipleChoice">
+        <div class="row">
+            <label class="col-md-2">A :</label>
+            <div class="col-8">
+                @Html.TextBox("textA", "", new { @class="form-control"})
+            </div>
+            <div class="col">
+                @Html.CheckBox("boolA", false, new { @class="form-control"})
+            </div>
+        </div>
+        <div class="row">
+            <label class="col-md-2">B :</label>
+            <div class="col-8">
+                @Html.TextBox("textB", "", new { @class="form-control"})
+            </div>
+            <div class="col">
+                @Html.CheckBox("boolB", false, new { @class="form-control"})
+            </div>
+        </div>
+           <div class="row">
+            <label class="col-md-2">C :</label>
+            <div class="col-8">
+                @Html.TextBox("textC", "", new { @class="form-control"})
+            </div>
+            <div class="col">
+                @Html.CheckBox("boolC", false, new { @class="form-control"})
+            </div>
+        </div>
+           <div class="row">
+            <label class="col-md-2">D :</label>
+            <div class="col-8">
+                @Html.TextBox("textD", "", new { @class="form-control"})
+            </div>
+            <div class="col">
+                @Html.CheckBox("boolD", false, new { @class="form-control"})
+            </div>
+        </div>
     </div>
-    <div class="TrueFalse">
-    @Html.LabelFor(q => q.Answers) 
-    @Html.EditorFor(q => q.Answers)
+    <div id="ShortAnswer" style="display : none">
+        <div class="col">
+        @Html.TextArea("textShortAnswer", "", new { @class="form-control"})
+        </div>
     </div>
+    <div id="TrueFalseDiv" style="display : none">
+        <select class="col align-self-center" id="TrueFalse" name="TrueFalse">
+            <option value="True" selected="selected">True</option>
+            <option value="False">False</option>
+        </select>
+    </div>
+</div>
 </div>

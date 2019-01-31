@@ -14,3 +14,16 @@
     </div>
 
 }
+@section Scripts
+{
+    <script>
+    $(document).ready(function() {
+        $('#Format').on('change', function () {
+           $('#MultipleChoice').toggle(this.value == 'MultipleChoice');
+           $('#ShortAnswer').toggle(this.value == 'ShortAnswer');
+           $('#TrueFalseDiv').toggle(this.value == 'TrueFalse');
+        });
+    });
+    console.log('test');
+    </script>
+}

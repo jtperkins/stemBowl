@@ -42,12 +42,23 @@ namespace stembowl.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create (Question q )
+        public ActionResult Create (Question q, string textShortAnswer, string TrueFalse, string textA, bool boolA, string textB, bool boolB, string textC, bool boolC, string textD, bool boolD)
         {
             try
             {
                 if (ModelState.IsValid)
                 { 
+                    if(q.Format == Format.TrueFalse)
+                        q.Answers.Add(new Answer() { Text="", Correct=bool.Parse(TrueFalse)});
+                    if(q.Format == Format.ShortAnswer)
+                        q.Answers.Add(new Answer() { Text=textShortAnswer});
+                    if(q.Format == Format.MultipleChoice)
+                    {
+                        q.Answers.Add(new Answer() { Text=textA, Correct=boolA });
+                        q.Answers.Add(new Answer() { Text=textB, Correct=boolB });
+                        q.Answers.Add(new Answer() { Text=textC, Correct=boolC });
+                        q.Answers.Add(new Answer() { Text=textD, Correct=boolD });
+                    }
                     _context.Questions.Add(q);
                     _context.SaveChanges();
                     return RedirectToAction(nameof(Index));

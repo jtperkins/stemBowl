@@ -35,43 +35,28 @@ body {
         display: none;
     }
 }
-/*
-.grid-box{
-    display: grid;
-    height: 100%;
-    grid-template-rows: repeat(8, 1fr);
-    grid-template-columns: repeat(5, 1fr);
-    grid-gap: 20px;
+
+.left {
+    width: 20%;
+    float: left;
+    text-align: right;
+}
+.right {
+    width: 75%;
+    margin-left: 10px;
+    float:left;
 }
 
-.grid-item{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-    .small{
-        grid-row: span 1;
-        grid-column: span 1;
-    }
-      
-      &.medium {
-        grid-row: span 2;
-        grid-column: span 2;
-      }
-      
-      &.large {
-        grid-row: span 3;
-        grid-column: span 3;
-      }
-      
-      &.tall {
-        grid-row: span 3;
-        grid-column: span 2;
-      }
-      
-      &.wide {
-        grid-row: span 2;
-        grid-column: span 3;
-      }
+.below {
+    height: 30%;
+    text-align: bottom;
+}
 
-}*/
+.top {
+    height: 70%;
+    text-align: top;
+}
+
+.label-right {
+    text-align: right;
+}

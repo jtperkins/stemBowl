@@ -12,7 +12,6 @@ namespace stembowl.Models
         public Question()
         {
             Answers = new List<Answer>();
-            Answers.Add(new Answer());
         }
         public int QuestionID {get; set;}
         public string SubmitterID {get; set;}
