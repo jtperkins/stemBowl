@@ -3,10 +3,52 @@
 @inject UserManager<IdentityUser> UserManager
 
 <hr />
+
+    <div class="row">
+        <div class="col-2">Question Text</div>
+        <div class="col-3">Format</div>
+    </div>
+    <br />
 @foreach(var question in Model)
 {
-    @Html.DisplayFor(q => question)
-    @Html.ActionLink("Delete", "Delete", new { questionId=@question.QuestionID })
+    <div class="row">
+        @Html.HiddenFor(q => question.QuestionID)
+        @Html.HiddenFor(q => question.SubmitterID) 
+        <div class="col-2">
+            @question.Text
+        </div>
+        <div class="col-3">
+            @question.Format
+        </div>
+        <div class="col">
+         <button id="showAnswers" aria-expanded="false" aria-controls=a-@question.QuestionID
+          data-toggle="collapse" data-target=#a-@question.QuestionID class="btn btn-secondary btn-sm">
+             Show answers</button> 
+            <div class="col collapse" id=a-@question.QuestionID>
+                @foreach(var answer in question.Answers)
+                {
+                    <div class="row">
+                        <div class="col-1">
+                            @if(@answer.Correct)
+                            {
+                                <span class="code char">&check;</span>
+                            }else
+                            {
+                                <span class="code char">&cross;</span>
+                            }
+                        </div>
+                        <div class="col">
+                            @answer.Text
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col">
+            @Html.ActionLink("Delete", "Delete", new { questionId=@question.QuestionID}, new {@class="btn btn-danger" })
+        </div>
+    </div>
 }
 
-@Html.ActionLink("Create", "Create", new { userID=@UserManager.GetUserId(User)})
+@Html.ActionLink("Create", "Create", new { userID=@UserManager.GetUserId(User)}, new { @class="btn btn-primary" })
+

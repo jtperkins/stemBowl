@@ -6,7 +6,7 @@
     <div class="col">
         <div class="row">
             @Html.Label("Text", "Question", new { @class="col-lg-2"})
-            @Html.TextAreaFor(q => q.Text, new { @class="col"})
+            @Html.TextAreaFor(q => q.Text, new { @class="col", required="required"})
         </div>
         <div class="row">
             @Html.LabelFor(q => q.Format, new { @class="col-lg-2"})
@@ -18,41 +18,57 @@
         </div>
     </div>
 <div class="answers col align-items-center">
-    <div class="row" id="MultipleChoice">
+    <div id="MultipleChoice">
         <div class="row">
-            <label class="col-md-2">A :</label>
-            <div class="col-8">
+            <div class="input-group col">
+              <div class="input-group-prepend">
+                <div class="input-group-text">A : </div>
+              </div>
                 @Html.TextBox("textA", "", new { @class="form-control"})
-            </div>
-            <div class="col">
-                @Html.CheckBox("boolA", false, new { @class="form-control"})
+              <div class="input-group-append">
+                <div class="input-group-text">
+                    @Html.CheckBox("boolA", false, new { @class="form-control"})
+                </div>
+              </div>
             </div>
         </div>
         <div class="row">
-            <label class="col-md-2">B :</label>
-            <div class="col-8">
+            <div class="input-group col">
+              <div class="input-group-prepend">
+                <div class="input-group-text">B : </div>
+              </div>
                 @Html.TextBox("textB", "", new { @class="form-control"})
-            </div>
-            <div class="col">
-                @Html.CheckBox("boolB", false, new { @class="form-control"})
+              <div class="input-group-append">
+                <div class="input-group-text">
+                    @Html.CheckBox("boolB", false, new { @class="form-control"})
+                </div>
+              </div>
             </div>
         </div>
-           <div class="row">
-            <label class="col-md-2">C :</label>
-            <div class="col-8">
+        <div class="row">
+            <div class="input-group col">
+              <div class="input-group-prepend">
+                <div class="input-group-text">C : </div>
+              </div>
                 @Html.TextBox("textC", "", new { @class="form-control"})
-            </div>
-            <div class="col">
-                @Html.CheckBox("boolC", false, new { @class="form-control"})
+              <div class="input-group-append">
+                <div class="input-group-text">
+                    @Html.CheckBox("boolC", false, new { @class="form-control"})
+                </div>
+              </div>
             </div>
         </div>
-           <div class="row">
-            <label class="col-md-2">D :</label>
-            <div class="col-8">
+        <div class="row">
+            <div class="input-group col">
+              <div class="input-group-prepend">
+                <div class="input-group-text">D : </div>
+              </div>
                 @Html.TextBox("textD", "", new { @class="form-control"})
-            </div>
-            <div class="col">
-                @Html.CheckBox("boolD", false, new { @class="form-control"})
+              <div class="input-group-append">
+                <div class="input-group-text">
+                    @Html.CheckBox("boolD", false, new { @class="form-control"})
+                </div>
+              </div>
             </div>
         </div>
     </div>

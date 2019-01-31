@@ -57,6 +57,6 @@ body {
     text-align: top;
 }
 
-.label-right {
-    text-align: right;
+.form-control {
+    height: 100%;
 }
