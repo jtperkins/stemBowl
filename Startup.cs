@@ -51,6 +51,11 @@ namespace stembowl
                 options.Password.RequireUppercase = false;
             });
 
+            services.ConfigureApplicationCookie(options => {
+                options.LoginPath = "/Identity/Account/Login";
+                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+            });
+
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
