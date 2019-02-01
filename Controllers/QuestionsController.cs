@@ -19,9 +19,11 @@ namespace stembowl.Controllers
         List<Question> questions {get; set;}
 
         QuestionDbContext _context;
+        UserManager<IdentityUser> _userContext;
 
-        public QuestionsController(QuestionDbContext context)
+        public QuestionsController(QuestionDbContext context, UserManager<IdentityUser> userManager)
         {
+            _userContext = userManager;
             _context = context;
         }
 
@@ -51,7 +53,7 @@ namespace stembowl.Controllers
                     if(q.Format == Format.TrueFalse)
                         q.Answers.Add(new Answer() { Text="", Correct=bool.Parse(TrueFalse)});
                     if(q.Format == Format.ShortAnswer)
-                        q.Answers.Add(new Answer() { Text=textShortAnswer});
+                        q.Answers.Add(new Answer() { Text=textShortAnswer, Correct=true});
                     if(q.Format == Format.MultipleChoice)
                     {
                         q.Answers.Add(new Answer() { Text=textA, Correct=boolA });
@@ -82,10 +84,15 @@ namespace stembowl.Controllers
             return RedirectToAction("Index");
         }
 
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Admin")]
         public ActionResult GetAll()
         {
             questions = _context.Questions.ToList();
+            foreach(var question in questions)
+            {
+                question.Answers = _context.Answer.Where( e => e.QuestionID == question.QuestionID).ToList();
+                question.SubmitterID = _userContext.Users.Where(e => e.Id == question.SubmitterID).FirstOrDefault()?.Email;
+            }
             return View(questions);
         }
     }
