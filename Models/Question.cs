@@ -16,6 +16,7 @@ namespace stembowl.Models
         public int QuestionID {get; set;}
         public string SubmitterID {get; set;}
         public Format Format {get; set;}
+        public string Category {get; set;}
         public string Text {get; set;}
         public List<Answer> Answers {get; set;}
 

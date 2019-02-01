@@ -4,16 +4,27 @@
 @Html.HiddenFor(q => q.SubmitterID)
 <div class="row">
     <div class="col">
-        <div class="row">
+        <div class="row mb-2">
             @Html.Label("Text", "Question", new { @class="col-lg-2"})
             @Html.TextAreaFor(q => q.Text, new { @class="col", required="required"})
         </div>
-        <div class="row">
+        <div class="row mb-2">
             @Html.LabelFor(q => q.Format, new { @class="col-lg-2"})
             <select class="col" data-val="true" data-val-required="The Format field is required." id="Format" name="Format">
                 <option value="MultipleChoice" selected="selected">Multiple Choice</option>
                 <option value="ShortAnswer" >Short Answer</option>
                 <option value="TrueFalse"> True/False</option>
+            </select>
+        </div>
+        <div class="row mb-2">
+            <label class="col-lg-2">Category</label>
+            <select class="col" data-val="true" data-val-required="The Category field is required." id="Category" name="Category">
+                <option value="Computer Science" selected="selected">Computer Science</option>
+                <option value="Biology">Biology</option>
+                <option value="Chemistry">Chemistry</option>
+                <option value="Physics">Physics</option>
+                <option value="Geology">Geology</option>
+                <option value="Other">Other</option>
             </select>
         </div>
     </div>

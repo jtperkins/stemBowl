@@ -6,7 +6,8 @@
 
     <div class="row">
         <div class="col-2 border-right">Question</div>
-        <div class="col-3">Format</div>
+        <div class="col-2">Format</div>
+        <div class="col-2 border-right">Category</div>
     </div>
     <br />
 @foreach(var question in Model)
@@ -17,7 +18,7 @@
         <div class="col-2 border-right">
             @question.Text
         </div>
-        <div class="col-3">
+        <div class="col-2">
             @switch(question.Format)
             {
                 case Format.MultipleChoice: <span>Multiple Choice</span>
@@ -29,6 +30,9 @@
                 default: <span> Invalid/Format</span>
                 break;
             }
+        </div>
+        <div class="col-2">
+            @question.Category
         </div>
         <button id="showAnswers" aria-expanded="false" aria-controls=a-@question.QuestionID data-toggle="collapse" data-target=#a-@question.QuestionID class="btn btn-secondary btn-sm">
              Show/Hide answers</button> 
