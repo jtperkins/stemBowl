@@ -4,7 +4,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using stembowl.Models;    
+using stembowl.Models;
+using Microsoft.EntityFrameworkCore;    
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Authentication;
@@ -29,9 +30,11 @@ namespace stembowl.Controllers
 
         public ActionResult Index()
         {
-            questions = _context.Questions.Where( e => e.SubmitterID == User.GetUserId()).ToList();
-            foreach(var question in questions)
-                question.Answers = _context.Answer.Where( e => e.QuestionID == question.QuestionID).ToList();
+
+            questions = _context.Questions
+                .Where( e => e.SubmitterID == User.GetUserId())
+                .Include(e => e.Answers).ToList();
+            
             return View(questions);
         }
 
@@ -75,10 +78,11 @@ namespace stembowl.Controllers
 
         public ActionResult Delete(int questionID)
         {
-            //There -has- to be a better way to do this
-            Answer[] answers = _context.Answer.Where(e => e.QuestionID == questionID).ToArray();
-            _context.Answer.RemoveRange(answers);
-            _context.Questions.Remove( _context.Questions.Where(e => e.QuestionID == questionID).FirstOrDefault());
+            var questions = _context.Questions
+                .Where(e => e.QuestionID == questionID)
+                .Include(e => e.Answers)
+                .ToList();
+            _context.RemoveRange(questions);
             _context.SaveChanges();
 
             return RedirectToAction("Index");
@@ -87,13 +91,13 @@ namespace stembowl.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult GetAll()
         {
-            questions = _context.Questions.ToList();
+            questions = _context.Questions
+                .Include(e => e.Answers)
+                .ToList();
             foreach(var question in questions)
-            {
-                question.Answers = _context.Answer.Where( e => e.QuestionID == question.QuestionID).ToList();
                 question.SubmitterID = _userContext.Users.Where(e => e.Id == question.SubmitterID).FirstOrDefault()?.Email;
-            }
             return View(questions);
         }
+
     }
 }
