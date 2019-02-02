@@ -23,7 +23,9 @@
            $('#ShortAnswer').toggle(this.value == 'ShortAnswer');
            $('#TrueFalseDiv').toggle(this.value == 'TrueFalse');
         });
+        $('input[type=checkbox]').change(function() {
+            $('input[type=checkbox]:checked').not(this).prop('checked', false);
+        });
     });
-    console.log('test');
     </script>
 }

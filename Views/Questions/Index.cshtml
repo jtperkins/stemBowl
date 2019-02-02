@@ -5,14 +5,16 @@
 <hr />
 
     <div class="row">
-        <div class="col-2 border-right">Question</div>
-        <div class="col-2">Format</div>
-        <div class="col-2 border-right">Category</div>
+        <div class="col-2 border-right btn-secondary disabled">Question</div>
+        <div class="col-2 border-right btn-primary" id="format-sort">Format</div>
+        <div class="col-2 border-right btn-primary" id="category-sort">Category</div>
+        <div class="col btn-secondary disabled"></div>
     </div>
     <br />
+<div id="questions">
 @foreach(var question in Model)
 {
-    <div class="row border-top">
+    <div class="row questions border-top" data-format=@question.Format data-category=@question.Category>
         @Html.HiddenFor(q => question.QuestionID)
         @Html.HiddenFor(q => question.SubmitterID) 
         <div class="col-2 border-right">
@@ -72,7 +74,7 @@
                     </button>
                   </div>
                   <div class="modal-body">
-                    Are you sure you want to delete this quesion?
+                      Are you sure you want to delete this quesion?
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Nevermind</button>
@@ -88,6 +90,32 @@
         </div>
     </div>
 }
+</div>
 
 @Html.ActionLink("Create", "Create", new { userID=@UserManager.GetUserId(User)}, new { @class="btn btn-primary mt-4" })
 
+@section Scripts
+{
+    <script>
+    $(document).ready( function(){
+        var $divs = $('div.questions');
+        var $toggle = true;
+
+        $('#format-sort').on('click', function() {
+            $toggle = !$toggle;
+            var sorted = $divs.sort( function (a,b) {
+                return $(a).attr('data-format') > $(b).attr('data-format') || $toggle;
+            });
+            $('#questions').html(sorted);
+            console.log(sorted);
+        });
+        $('#category-sort').on('click', function() {
+            $toggle = !$toggle;
+            var sorted = $divs.sort( function (a,b) {
+                return $(a).attr('data-category') > $(b).attr('data-category') || $toggle;
+            });
+            $('#questions').html(sorted);
+        });
+    });
+    </script>
+}

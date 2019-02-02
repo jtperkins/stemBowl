@@ -5,15 +5,17 @@
 <hr />
 
     <div class="row">
-        <div class="col-2 border-right">Submitter</div>
-        <div class="col-2 border-right">Question</div>
-        <div class="col-2">Format</div>
-        <div class="col-2">Category</div>
+        <div class="col-2 border-right btn-primary" id="submitter-sort">Submitter</div>
+        <div class="col-2 border-right btn-secondary disabled">Question</div>
+        <div class="col-2 border-right btn-primary" id="format-sort">Format</div>
+        <div class="col-2 border-right btn-primary" id="category-sort">Category</div>
+        <div class="col btn-secondary disabled"></div>
     </div>
     <br />
+    <div id="questions">
 @foreach(var question in Model)
 {
-    <div class="row border-top">
+    <div class="row questions border-top" data-submitter=@question.SubmitterID data-format=@question.Format data-category=@question.Category>
         @Html.HiddenFor(q => question.QuestionID)
         <div class="col-2">
         @Html.DisplayFor(q => question.SubmitterID) 
@@ -87,6 +89,42 @@
         </div>
     </div>
 }
-<!--
-@Html.ActionLink("Create", "Create", new { userID=@UserManager.GetUserId(User)}, new { @class="btn btn-primary mt-4" })
--->
+</div>
+<!-- @Html.ActionLink("Create", "Create", new { userID=@UserManager.GetUserId(User)}, new { @class="btn btn-primary mt-4" })-->
+
+@section Scripts
+{
+    <script>
+    $(document).ready( function(){
+        var $divs = $('div.questions');
+        var $toggle = true;
+
+        $('#format-sort').on('click', function() {
+            $toggle = !$toggle;
+            var sorted = $divs.sort( function (a,b) {
+                return $(a).attr('data-format') > $(b).attr('data-format') || $toggle;
+            });
+            $('#questions').html(sorted);
+        });
+        $('#category-sort').on('click', function() {
+            $toggle = !$toggle;
+            var sorted = $divs.sort( function (a,b) {
+                return $(a).attr('data-category') > $(b).attr('data-category') || $toggle;
+            });
+            $('#questions').html(sorted);
+        });
+        $('#submitter-sort').on('click', function() {
+            $toggle = !$toggle;
+            var sorted = $divs.sort( function (a,b) {
+                return $(a).attr('data-submitter') > $(b).attr('data-submitter') || $toggle;
+            });
+            $('#questions').html(sorted);
+        });
+
+
+ 
+    });
+
+
+    </script>
+}
