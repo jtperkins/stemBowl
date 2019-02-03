@@ -99,7 +99,7 @@ namespace stembowl
 
             var UserManager = serviceScope.ServiceProvider.GetService<UserManager<IdentityUser>>();
 
-            string[] roleNames = { "Admin", "Manager", "Member" };
+            string[] roleNames = { "Admin", "Student", "Faculty" };
 
             IdentityResult roleResult;
 

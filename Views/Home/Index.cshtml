@@ -1,3 +1,61 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@using Microsoft.AspNetCore.Identity
+@using stembowl.Models
+
+@inject SignInManager<IdentityUser> signInManager
+@inject UserManager<IdentityUser> userManager
+
+<hr />
+@if(signInManager.IsSignedIn(User))
+{
+    <p>Hello @userManager.GetUserName(User)!</p>
+    
+    var currentUser = await userManager.GetUserAsync(User);
+    var isAdmin = await userManager.IsInRoleAsync(
+            currentUser,
+            "Admin");
+    var isFaculty = await userManager.IsInRoleAsync(
+            currentUser,
+            "Faculty");
+    var isStudent = await userManager.IsInRoleAsync(
+            currentUser,
+            "Student");
+    if(isAdmin)
+    {
+        <li>
+            <a asp-controller="ManageUsers" asp-action="Index">
+                   Manage Users
+            </a>
+        </li>
+        <li>
+            <a asp-controller="Questions" asp-action="Index">
+                   SubmitQuestions
+            </a>
+        </li>
+        <li>
+            <a asp-controller="Questions" asp-action="GetAll">
+                   Manage Questions
+            </a>
+        </li>
+    }
+    else if(isFaculty)
+    {
+        <li>
+            <a asp-controller="Questions" asp-action="Index">
+                   SubmitQuestions
+            </a>
+        </li>
+    }
+    else
+    {
+        <p>Sorry, nothing here for you until the event!
+
+        If you are coming here to submit questions, please enter your code 
+                <a asp-area="Identity" asp-page="/Account/Manage/ChangeRole" title="Manage">
+                    here.
+                </a>
+        </p>
+    }
+}

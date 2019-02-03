@@ -14,8 +14,7 @@ namespace stembowl.Controllers
     [Authorize(Roles = "Admin")]
     public class ManageUsersController : Controller
     {
-        private readonly UserManager<IdentityUser>
-            _userManager;
+        private readonly UserManager<IdentityUser> _userManager;
 
         public ManageUsersController(UserManager<IdentityUser> userManager)
         {
@@ -27,6 +26,9 @@ namespace stembowl.Controllers
             var admins = (await _userManager
                 .GetUsersInRoleAsync("Admin"))
                 .ToArray();
+            var faculty = (await _userManager
+                .GetUsersInRoleAsync("Faculty"))
+                .ToArray();
 
             var everyone = await _userManager.Users
                 .ToArrayAsync();
@@ -34,6 +36,7 @@ namespace stembowl.Controllers
             var model = new ManageUsersViewModel
             {
                 Administrators = admins,
+                Faculty = faculty,
                 Everyone = everyone
             };
 
