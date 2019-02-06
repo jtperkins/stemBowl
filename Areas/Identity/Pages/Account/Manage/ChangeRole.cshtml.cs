@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
+
 namespace stembowl.Areas.Identity.Pages.Account.Manage
 {
     public class ChangeRoleModel : PageModel
@@ -14,12 +16,15 @@ namespace stembowl.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<ChangeRoleModel> _logger;
+        private readonly IConfiguration _configuration;
 
         public ChangeRoleModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            ILogger<ChangeRoleModel> logger)
+            ILogger<ChangeRoleModel> logger,
+            IConfiguration configuration)
         {
+            _configuration = configuration;
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
@@ -61,25 +66,28 @@ namespace stembowl.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            if(!Input.Code.ToLower().Equals("tccd"))
+            string role = _configuration.GetSection("RoleCodes").GetValue<String>(Input.Code.ToLower(), "");
+
+            if(String.IsNullOrEmpty(role))
             {
                     _logger.LogInformation("User entered and invalid code");
                     ModelState.AddModelError(string.Empty, "Invalid Code");
                 return Page();
-            }
-
-            var changeRoleResult = await _userManager.AddToRoleAsync(user, "Faculty");
-            if (!changeRoleResult.Succeeded)
+            }else
             {
-                foreach (var error in changeRoleResult.Errors)
+                var changeRoleResult = await _userManager.AddToRoleAsync(user, role);
+                if (!changeRoleResult.Succeeded)
                 {
-                    ModelState.AddModelError(string.Empty, error.Description);
+                    foreach (var error in changeRoleResult.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                    return Page();
                 }
-                return Page();
             }
             await _signInManager.RefreshSignInAsync(user);
             _logger.LogInformation("User changed their role successfully.");
-            StatusMessage = "You are now registered and can submit questions";
+            StatusMessage = $"You have been added to the {role} group.";
 
             return RedirectToPage();
         }
