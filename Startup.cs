@@ -41,7 +41,8 @@ namespace stembowl
             services.AddDbContext<QuestionDbContext>(
                 opt => opt.UseMySql(Configuration.GetConnectionString("connectionString"))
             );
-
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<QuestionDbContext>();
             services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequireDigit = false;
