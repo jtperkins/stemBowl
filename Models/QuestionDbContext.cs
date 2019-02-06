@@ -22,11 +22,11 @@ namespace stembowl.Models
         {
             
             base.OnModelCreating(modelBuilder);
-        // configures one-to-many relationship
+            /*configures one-to-many relationship
             modelBuilder.Entity<ApplicationUser>()
                 .HasOne<Team>(s => s.Team)
                 .WithMany(g => g.TeamMembers)
-                .HasForeignKey(s => s.TeamID);
+                .HasForeignKey(s => s.TeamID);*/
         }
 
     }

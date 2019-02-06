@@ -65,15 +65,11 @@ namespace stembowl.Areas.Identity.Pages.Account.Manage
                 return Page();
             }
             
-            Team team = new Team(){
-                TeamName = Input.TeamName,
-                LeaderID = user.Id
-            };
-
-            //Create an applicationuser with a team field and remigrate to do this properly.
+            Team team = new Team(Input.TeamName, user);
 
             //_questionDbContext.Teams.Add(team);
             //await _questionDbContext.SaveChangesAsync();
+
             user.Team = team;
             user.TeamID = team.TeamID;
             await _userManager.UpdateAsync(user);

@@ -7,14 +7,19 @@ namespace stembowl.Models
 {
     public class Team
     {
-        public Team()
+        public Team(){}
+        public Team(string teamName, ApplicationUser teamLeader)
         {
+            TeamName = teamName;
+            Leader = teamLeader;
+            TeamMembers = new List<TeamMembers>() {
+                    new TeamMembers(teamLeader, this)
+            };
         }
         public string TeamName {get; set;}
         public string TeamID {get; set;}
         public ICollection<TeamAnswers> Answered { get; set;}
-        public ICollection<Question> Unanswered {get; set;}
-        public ICollection<ApplicationUser> TeamMembers { get; set;}
+        public ICollection<TeamMembers> TeamMembers { get; set;}
         [ForeignKey("Leader")]
         public string LeaderID {get; set;}
         public ApplicationUser Leader { get; set;}

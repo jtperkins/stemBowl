@@ -51,22 +51,21 @@ namespace stembowl.Areas.Identity.Pages.Account.Manage
 
             var user = await _userManager.GetUserAsync(User);
             var team = _questionDbContext.Teams
-                .Include(e=> e.TeamMembers)
-                .Include(e => e.Leader)
-                .Where(e => e.TeamMembers.Contains(user))
-                //.Where(e => e.Leader == user)
+                .Include(t => t.TeamMembers)
+                .ThenInclude(tm => tm.TeamMember)
+                .Include(t => t.Leader)
+                .Where(t => t.TeamMembers.FirstOrDefault(tm => tm.TeamMember == user) != null)
                 .FirstOrDefault();
 
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }else if(user.Id == team.LeaderID)
+            }else if(user.Id == team?.LeaderID)
             {
                 return RedirectToPage("AddMember");
             }
             else if(team != null)
             {
-                var a = team.Leader.UserName;
                 Display = new DisplayModel{
                     TeamLead = team.Leader.UserName,
                     TeamName = team.TeamName

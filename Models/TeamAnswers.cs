@@ -6,7 +6,9 @@ namespace stembowl.Models
     {
         public string TeamAnswersID {get; set;}
         public string TeamID {get; set;}
-        public string QuestionID {get; set;}
+        [ForeignKey("Question")]
+        public int QuestionID {get; set;}
+        public Question Question {get; set;}
         public string Answer {get; set;}
         public bool Correct {get; set;}
 

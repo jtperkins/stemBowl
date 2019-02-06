@@ -12,9 +12,45 @@
         <partial name="_ManageNav" />
     </div>
     <div class="col-md-6">
-        
-
+        <form id="create-team" method="post">
+            <div class="form-group">
+                <div class="row">
+                    <label asp-for="Input.TeamName"></label>
+                </div>
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="row">
+                    <label asp-for="Input.AddMember"></label>
+                    <input asp-for="Input.AddMember" class="form-control" />
+                    <span asp-validation-for="Input.AddMember" class="text-danger"></span>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Member</button>
+        </form> 
     </div>
+</div>
+<br />
+    <h2 class="row"> Members!</h2>
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-2">
+            User Name                
+        </div>
+        <div class="col">
+            Email                
+        </div>
+    </div>
+    @foreach(var member in @Model.Members)
+    {
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-2">
+                @member.TeamMember.UserName
+            </div>
+            <div class="col">
+                @member.TeamMember.Email
+            </div>
+        </div>
+    }
 </div>
 
 @section Scripts {

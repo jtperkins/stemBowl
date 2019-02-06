@@ -64,7 +64,7 @@ namespace stembowl.Areas.Identity.Pages.Account.Manage
             if(!Input.Code.ToLower().Equals("tccd"))
             {
                     _logger.LogInformation("User entered and invalid code");
-                    StatusMessage = "You are now registerd and can submit questions";
+                    ModelState.AddModelError(string.Empty, "Invalid Code");
                 return Page();
             }
 

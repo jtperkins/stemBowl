@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using stembowl.Models;
 
 namespace stembowl.Migrations.QuestionDb
 {
     [DbContext(typeof(QuestionDbContext))]
-    partial class QuestionDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190206015404_FixingTeams")]
+    partial class FixingTeams
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -256,6 +258,10 @@ namespace stembowl.Migrations.QuestionDb
                 {
                     b.Property<string>("TeamMembersID")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Answer");
+
+                    b.Property<bool>("Correct");
 
                     b.Property<string>("TeamID");
 

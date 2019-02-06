@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using stembowl.Models;
+using Microsoft.EntityFrameworkCore;
 namespace stembowl.Areas.Identity.Pages.Account.Manage
 {
     public class AddMemberModel : PageModel
@@ -31,18 +32,43 @@ namespace stembowl.Areas.Identity.Pages.Account.Manage
         }
 
         [BindProperty]
+        public IEnumerable<TeamMembers> Members {get; set;}
+        [BindProperty]
         public InputModel Input { get; set; }
         [BindProperty]
 
         [TempData]
         public string StatusMessage { get; set; }
 
+
         public class InputModel
         {
             [Display(Name = "Team Name")]
             public string TeamName {get; set;}
-            [Display(Name = "Add a team member")]
+            [Required]
+            [EmailAddress]
+            [Display(Name = "Add a team member by email")]
             public string AddMember { get; set; }
+       }
+
+       public async Task<IActionResult> OnGetAsync()
+       {
+            var user = await _userManager.GetUserAsync(User);
+            var team = _questionDbContext.Teams
+                                .Where(e => e.LeaderID == user.Id)
+                                .Include(t => t.TeamMembers)
+                                .ThenInclude(tm => tm.TeamMember)
+                                .FirstOrDefault();
+            if (user == null)
+            {
+                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }else if(team == null)
+            {
+                return RedirectToPage("CreateTeam");
+            }
+            Members = team.TeamMembers;
+
+            return Page();
        }
 
        public async Task<IActionResult> OnPostAsync()
@@ -58,29 +84,32 @@ namespace stembowl.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            var userAdd = _userManager.Users.Where(e => e.NormalizedUserName == Input.AddMember.Normalize()).FirstOrDefault();
+            var userAdd = _userManager.Users
+                .Where(e => e.NormalizedUserName == Input.AddMember.Normalize())
+                .FirstOrDefault();
 
             if(userAdd != null)
             {
-                _questionDbContext.Teams.Where(e => user == e.Leader );
+                var team = _questionDbContext.Teams
+                    .Where(e => e.LeaderID == user.Id)
+                    .Include(t => t.TeamMembers)
+                    .FirstOrDefault();
+                team.TeamMembers.Add( new TeamMembers(userAdd, team));
+                userAdd.TeamID = team.TeamID;
+                await _userManager.UpdateAsync(userAdd);
+                _questionDbContext.Update(team);
+                await _questionDbContext.SaveChangesAsync();
+
                 StatusMessage = userAdd.UserName + " was added to your team!";
                 return RedirectToPage();
             }
 
-            var changeRoleResult = await _userManager.AddToRoleAsync(user, "TeamLead");
-            if (!changeRoleResult.Succeeded)
-            {
-                foreach (var error in changeRoleResult.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
-                return Page();
-            }
+            
             await _signInManager.RefreshSignInAsync(user);
-            _logger.LogInformation("User changed their role successfully.");
-            StatusMessage = "You are now registered and can submit questions";
+            _logger.LogInformation("Tried to add an invalid user.");
+            ModelState.AddModelError(string.Empty, "No user found with that email");
 
-            return RedirectToPage();
+            return Page();
         }
     }
 }
