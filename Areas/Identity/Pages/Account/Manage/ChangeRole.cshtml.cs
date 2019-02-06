@@ -11,14 +11,14 @@ namespace stembowl.Areas.Identity.Pages.Account.Manage
 {
     public class ChangeRoleModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly ILogger<ChangePasswordModel> _logger;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly ILogger<ChangeRoleModel> _logger;
 
         public ChangeRoleModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
-            ILogger<ChangePasswordModel> logger)
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
+            ILogger<ChangeRoleModel> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;

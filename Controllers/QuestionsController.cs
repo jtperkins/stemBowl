@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Security.Authentication;
 using System.Security.Principal;
 using Shared.Web.MvcExtensions;
+using stembowl.Areas.Identity;
 
 namespace stembowl.Controllers
 {
@@ -20,9 +21,9 @@ namespace stembowl.Controllers
         List<Question> questions {get; set;}
 
         QuestionDbContext _context;
-        UserManager<IdentityUser> _userContext;
+        UserManager<ApplicationUser> _userContext;
 
-        public QuestionsController(QuestionDbContext context, UserManager<IdentityUser> userManager)
+        public QuestionsController(QuestionDbContext context, UserManager<ApplicationUser> userManager)
         {
             _userContext = userManager;
             _context = context;
@@ -54,7 +55,7 @@ namespace stembowl.Controllers
                 if (ModelState.IsValid)
                 { 
                     if(q.Format == Format.TrueFalse)
-                        q.Answers.Add(new Answer() { Text="", Correct=bool.Parse(TrueFalse)});
+                        q.Answers.Add(new Answer() { Text=TrueFalse, Correct=true});
                     if(q.Format == Format.ShortAnswer)
                         q.Answers.Add(new Answer() { Text=textShortAnswer, Correct=true});
                     if(q.Format == Format.MultipleChoice)

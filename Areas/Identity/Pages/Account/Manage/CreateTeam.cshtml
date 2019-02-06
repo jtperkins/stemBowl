@@ -1,0 +1,29 @@
+@page
+@model CreateTeamModel
+@{
+    ViewData["Title"] = "Create Team";
+    ViewData["ActivePage"] = ManageNavPages.TeamManagment;
+}
+<hr />
+<h4>@ViewData["Title"]</h4>
+<partial name="_StatusMessage" for="StatusMessage" />
+<div class="row">
+    <div clas="col-md-3">
+        <partial name="_ManageNav" />
+    </div>
+    <div class="col-md-6">
+        <form id="create-team" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Input.TeamName"></label>
+                <input asp-for="Input.TeamName" class="form-control" />
+                <span asp-validation-for="Input.TeamName" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Team</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

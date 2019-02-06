@@ -97,9 +97,9 @@ namespace stembowl
 
             var RoleManager = serviceScope.ServiceProvider.GetService<RoleManager<IdentityRole>>();
 
-            var UserManager = serviceScope.ServiceProvider.GetService<UserManager<IdentityUser>>();
+            var UserManager = serviceScope.ServiceProvider.GetService<UserManager<ApplicationUser>>();
 
-            string[] roleNames = { "Admin", "Student", "Faculty" };
+            string[] roleNames = { "Admin", "Student", "Faculty", "TeamLead" };
 
             IdentityResult roleResult;
 
@@ -114,26 +114,7 @@ namespace stembowl
                 }
             }
 
-            //creating a super user who could maintain the web app
-            var poweruser = new IdentityUser
-            {
-                Email = Configuration.GetSection("UserSettings")["UserEmail"]
-            };
 
-            string UserPassword = Configuration.GetSection("UserSettings")["UserPassword"];
-
-            var _user = await UserManager.FindByEmailAsync(Configuration.GetSection("UserSettings")["UserEmail"]);
-
-            if(_user == null)
-            {
-
-                    var createPowerUser = await UserManager.CreateAsync(poweruser, UserPassword);
-                    if (createPowerUser.Succeeded)
-                    {
-                        //here we tie the new user to the "Admin" role 
-                        await UserManager.AddToRoleAsync(poweruser, "Admin");
-                    }
-            }
             }
             
         }

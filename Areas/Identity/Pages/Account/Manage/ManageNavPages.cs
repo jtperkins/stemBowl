@@ -16,6 +16,7 @@ namespace stembowl.Areas.Identity.Pages.Account.Manage
         public static string TwoFactorAuthentication => "TwoFactorAuthentication";
 
         public static string ChangeRole => "ChangeRole";
+        public static string TeamManagment => "TeamManagment";
 
         public static string IndexNavClass(ViewContext viewContext) => PageNavClass(viewContext, Index);
 
@@ -24,9 +25,9 @@ namespace stembowl.Areas.Identity.Pages.Account.Manage
         public static string ExternalLoginsNavClass(ViewContext viewContext) => PageNavClass(viewContext, ExternalLogins);
 
         public static string PersonalDataNavClass(ViewContext viewContext) => PageNavClass(viewContext, PersonalData);
-
         public static string TwoFactorAuthenticationNavClass(ViewContext viewContext) => PageNavClass(viewContext, TwoFactorAuthentication);
         public static string ChangeRoleNavClass(ViewContext viewContext) => PageNavClass(viewContext, ChangeRole);
+        public static string TeamManagmentNavClass(ViewContext viewContext) => PageNavClass(viewContext, TeamManagment);
 
         private static string PageNavClass(ViewContext viewContext, string page)
         {

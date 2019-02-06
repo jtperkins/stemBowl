@@ -1,0 +1,22 @@
+@page
+@model AddMemberModel
+@{
+    ViewData["Title"] = "Team Managment";
+    ViewData["ActivePage"] = ManageNavPages.TeamManagment;
+}
+<hr />
+<h4>@ViewData["Title"]</h4>
+<partial name="_StatusMessage" for="StatusMessage" />
+<div class="row">
+    <div clas="col-md-3">
+        <partial name="_ManageNav" />
+    </div>
+    <div class="col-md-6">
+        
+
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

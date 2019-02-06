@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using stembowl.Areas.Identity.Data;
+using stembowl.Models;
 
 [assembly: HostingStartup(typeof(stembowl.Areas.Identity.IdentityHostingStartup))]
 namespace stembowl.Areas.Identity
@@ -19,7 +20,7 @@ namespace stembowl.Areas.Identity
                     options.UseMySql(
                         context.Configuration.GetConnectionString("connectionString")));
 
-                services.AddIdentity<IdentityUser, IdentityRole>()
+                services.AddIdentity<ApplicationUser, IdentityRole>()
                     .AddEntityFrameworkStores<stembowlIdentityDbContext>();
             });
         }

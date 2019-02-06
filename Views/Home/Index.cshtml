@@ -3,9 +3,10 @@
 }
 @using Microsoft.AspNetCore.Identity
 @using stembowl.Models
+@using stembowl.Areas.Identity
 
-@inject SignInManager<IdentityUser> signInManager
-@inject UserManager<IdentityUser> userManager
+@inject SignInManager<ApplicationUser> signInManager
+@inject UserManager<ApplicationUser> userManager
 
 <hr />
 @if(signInManager.IsSignedIn(User))
@@ -31,7 +32,7 @@
         </li>
         <li>
             <a asp-controller="Questions" asp-action="Index">
-                   SubmitQuestions
+                   Submit Questions
             </a>
         </li>
         <li>

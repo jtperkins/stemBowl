@@ -2,24 +2,22 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using stembowl.Areas.Identity.Data;
+using stembowl.Models;
 
-namespace stembowl.Migrations
+namespace stembowl.Migrations.QuestionDb
 {
-    [DbContext(typeof(stembowlIdentityDbContext))]
-    [Migration("20190122214825_CreateIdentitySchema")]
-    partial class CreateIdentitySchema
+    [DbContext(typeof(QuestionDbContext))]
+    [Migration("20190203185129_Teams")]
+    partial class Teams
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "2.2.1-servicing-10028")
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -39,8 +37,7 @@ namespace stembowl.Migrations
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
+                        .HasName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles");
                 });
@@ -48,8 +45,7 @@ namespace stembowl.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ClaimType");
 
@@ -98,6 +94,8 @@ namespace stembowl.Migrations
 
                     b.Property<string>("SecurityStamp");
 
+                    b.Property<string>("TeamID");
+
                     b.Property<bool>("TwoFactorEnabled");
 
                     b.Property<string>("UserName")
@@ -110,8 +108,9 @@ namespace stembowl.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+                        .HasName("UserNameIndex");
+
+                    b.HasIndex("TeamID");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -119,8 +118,7 @@ namespace stembowl.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.ApplicationUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ClaimType");
 
@@ -138,11 +136,9 @@ namespace stembowl.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.ApplicationUserLogin<string>", b =>
                 {
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("ProviderKey")
-                        .HasMaxLength(128);
+                    b.Property<string>("ProviderKey");
 
                     b.Property<string>("ProviderDisplayName");
 
@@ -173,11 +169,9 @@ namespace stembowl.Migrations
                 {
                     b.Property<string>("UserId");
 
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(128);
+                    b.Property<string>("Name");
 
                     b.Property<string>("Value");
 
@@ -186,12 +180,97 @@ namespace stembowl.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("stembowl.Models.Answer", b =>
+                {
+                    b.Property<int>("AnswerID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("Correct");
+
+                    b.Property<int>("QuestionID");
+
+                    b.Property<string>("Text");
+
+                    b.HasKey("AnswerID");
+
+                    b.HasIndex("QuestionID");
+
+                    b.ToTable("Answer");
+                });
+
+            modelBuilder.Entity("stembowl.Models.Question", b =>
+                {
+                    b.Property<int>("QuestionID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Category");
+
+                    b.Property<int>("Format");
+
+                    b.Property<string>("SubmitterID");
+
+                    b.Property<string>("TeamID");
+
+                    b.Property<string>("Text");
+
+                    b.HasKey("QuestionID");
+
+                    b.HasIndex("TeamID");
+
+                    b.ToTable("Questions");
+                });
+
+            modelBuilder.Entity("stembowl.Models.Team", b =>
+                {
+                    b.Property<string>("TeamID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("LeaderId");
+
+                    b.HasKey("TeamID");
+
+                    b.HasIndex("LeaderId");
+
+                    b.ToTable("Answers");
+                });
+
+            modelBuilder.Entity("stembowl.Models.TeamAnswers", b =>
+                {
+                    b.Property<string>("TeamAnswersID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Answer");
+
+                    b.Property<bool>("Correct");
+
+                    b.Property<string>("QuestionID");
+
+                    b.Property<int?>("QuestionID1");
+
+                    b.Property<string>("TeamID");
+
+                    b.HasKey("TeamAnswersID");
+
+                    b.HasIndex("QuestionID1");
+
+                    b.HasIndex("TeamID");
+
+                    b.ToTable("TeamAnswers");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.ApplicationUser", b =>
+                {
+                    b.HasOne("stembowl.Models.Team")
+                        .WithMany("TeamMembers")
+                        .HasForeignKey("TeamID");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.ApplicationUserClaim<string>", b =>
@@ -229,6 +308,39 @@ namespace stembowl.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("stembowl.Models.Answer", b =>
+                {
+                    b.HasOne("stembowl.Models.Question")
+                        .WithMany("Answers")
+                        .HasForeignKey("QuestionID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("stembowl.Models.Question", b =>
+                {
+                    b.HasOne("stembowl.Models.Team")
+                        .WithMany("Unanswered")
+                        .HasForeignKey("TeamID");
+                });
+
+            modelBuilder.Entity("stembowl.Models.Team", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.ApplicationUser", "Leader")
+                        .WithMany()
+                        .HasForeignKey("LeaderId");
+                });
+
+            modelBuilder.Entity("stembowl.Models.TeamAnswers", b =>
+                {
+                    b.HasOne("stembowl.Models.Question", "Question")
+                        .WithMany()
+                        .HasForeignKey("QuestionID1");
+
+                    b.HasOne("stembowl.Models.Team")
+                        .WithMany("Answered")
+                        .HasForeignKey("TeamID");
                 });
 #pragma warning restore 612, 618
         }

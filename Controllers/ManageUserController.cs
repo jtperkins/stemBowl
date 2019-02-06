@@ -8,15 +8,16 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using stembowl.Models;
 using Microsoft.EntityFrameworkCore;
+using stembowl.Areas.Identity;
 
 namespace stembowl.Controllers
 {
     [Authorize(Roles = "Admin")]
     public class ManageUsersController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ManageUsersController(UserManager<IdentityUser> userManager)
+        public ManageUsersController(UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
         }
