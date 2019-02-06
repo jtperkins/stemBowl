@@ -50,17 +50,20 @@ namespace stembowl.Areas.Identity.Pages.Account.Manage
             //Need to make TeamMembers function for this to work
 
             var user = await _userManager.GetUserAsync(User);
-            var team = _questionDbContext.Teams
-                .Include(t => t.TeamMembers)
-                .ThenInclude(tm => tm.TeamMember)
-                .Include(t => t.Leader)
-                .Where(t => t.TeamMembers.FirstOrDefault(tm => tm.TeamMember == user) != null)
-                .FirstOrDefault();
+
 
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }else if(user.Id == team?.LeaderID)
+            }
+            var team = _questionDbContext.Teams
+                .Where(t => t.TeamID == user.TeamID)
+                .Include(t => t.Leader)
+                .Include(t => t.TeamMembers)
+                .ThenInclude(tm => tm.TeamMember)
+                .FirstOrDefault();
+            
+            if(user.Id == team?.LeaderID)
             {
                 return RedirectToPage("AddMember");
             }
@@ -87,12 +90,30 @@ namespace stembowl.Areas.Identity.Pages.Account.Manage
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
+            return RedirectToPage();
+        }
+        public async Task<IActionResult> OnPostQuit()
+        {
+            var user = await _userManager.GetUserAsync(User);
 
-            
-           
-            //await _signInManager.RefreshSignInAsync(user);
-            //_logger.LogInformation("User changed their role successfully.");
-            //StatusMessage = "You are now registered and can submit questions";
+            if (user == null)
+            {
+                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+            var team = _questionDbContext.Teams
+                .Where(t => t.TeamID == user.TeamID)
+                .Include(t => t.Leader)
+                .Include(t => t.TeamMembers)
+                .ThenInclude(tm => tm.TeamMember)
+                .FirstOrDefault();
+            if(team != null)
+            {
+                var thisUser = _questionDbContext.TeamMembers.Where(e => e.TeamMemberID == user.Id);
+                _questionDbContext.RemoveRange(thisUser);
+                user.TeamID = null;
+                _questionDbContext.Update(user);
+                await _questionDbContext.SaveChangesAsync();
+            }
 
             return RedirectToPage();
         }

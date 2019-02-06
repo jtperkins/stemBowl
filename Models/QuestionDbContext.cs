@@ -17,6 +17,7 @@ namespace stembowl.Models
         public DbSet<Answer> Answer { get; set;}
         public DbSet<Team> Teams {get; set;}
         public DbSet<TeamAnswers> TeamAnswers {get; set;}
+        public DbSet<TeamMembers> TeamMembers {get; set;}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

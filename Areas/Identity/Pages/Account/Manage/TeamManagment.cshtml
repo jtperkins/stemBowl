@@ -12,10 +12,15 @@
         <partial name="_ManageNav" />
     </div>
     <div class="col-md-6">
-        You are already part of @Model.Display.TeamName, led by @Model.Display.TeamLead,
+        <div class="row">
+        You are already part of team @Model.Display.TeamName, 
+        led by @Model.Display.TeamLead,
         contact them to add members.
+        </div>
+    <form class="row" asp-page-handler="quit" method="post">
+        <button class="btn btn-danger">Quit Team</button>
+    </form>
     </div>
-    <button>Quit Team</button>
 </div>
 
 @section Scripts {

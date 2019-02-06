@@ -53,6 +53,7 @@ namespace stembowl.Areas.Identity.Pages.Account.Manage
 
        public async Task<IActionResult> OnGetAsync()
        {
+            //move the team stuff into it's own partial view to avoid it dissapering on posting
             var user = await _userManager.GetUserAsync(User);
             var team = _questionDbContext.Teams
                                 .Where(e => e.LeaderID == user.Id)
@@ -88,28 +89,58 @@ namespace stembowl.Areas.Identity.Pages.Account.Manage
                 .Where(e => e.NormalizedUserName == Input.AddMember.Normalize())
                 .FirstOrDefault();
 
-            if(userAdd != null)
+            if(userAdd == null)
             {
-                var team = _questionDbContext.Teams
+                ModelState.AddModelError(string.Empty, "No user found with that email");
+                return Page();
+            }
+            if(userAdd.TeamID != null)
+            {
+                ModelState.AddModelError(string.Empty, $"{userAdd.UserName} is already part of a Team");
+                return Page();
+            }
+
+            var team = _questionDbContext.Teams
                     .Where(e => e.LeaderID == user.Id)
                     .Include(t => t.TeamMembers)
                     .FirstOrDefault();
-                team.TeamMembers.Add( new TeamMembers(userAdd, team));
-                userAdd.TeamID = team.TeamID;
-                await _userManager.UpdateAsync(userAdd);
-                _questionDbContext.Update(team);
-                await _questionDbContext.SaveChangesAsync();
 
-                StatusMessage = userAdd.UserName + " was added to your team!";
-                return RedirectToPage();
+            team.TeamMembers.Add(new TeamMembers(userAdd, team));
+            userAdd.TeamID = team.TeamID;
+            await _userManager.UpdateAsync(userAdd);
+            _questionDbContext.Update(team);
+            await _questionDbContext.SaveChangesAsync();
+
+            StatusMessage = $"{userAdd.UserName} was added to team {team.TeamName}!";
+            _logger.LogInformation($"{userAdd.UserName} was added to {team.TeamName}.");
+            return RedirectToPage();
+
+        }
+
+        public async Task<IActionResult> OnPostDelete()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var team = _questionDbContext.Teams
+                                .Where(e => e.LeaderID == user.Id)
+                                .Include(t => t.TeamMembers)
+                                .ThenInclude(tm => tm.TeamMember)
+                                .FirstOrDefault();
+            if (user == null)
+            {
+                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }else if(team == null)
+            {
+                return RedirectToPage("CreateTeam");
             }
 
+            _questionDbContext.Teams.Remove(team);
+            foreach(var member in team.TeamMembers)
+                _questionDbContext.TeamMembers.Remove(member);
+            await _questionDbContext.SaveChangesAsync();
             
-            await _signInManager.RefreshSignInAsync(user);
-            _logger.LogInformation("Tried to add an invalid user.");
-            ModelState.AddModelError(string.Empty, "No user found with that email");
 
-            return Page();
+            return RedirectToPage("CreateTeam");
         }
+
     }
 }

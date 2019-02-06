@@ -15,12 +15,12 @@ namespace stembowl.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private QuestionDbContext _questionDbContext;
-        private readonly ILogger<TeamManagmentModel> _logger;
+        private readonly ILogger<CreateTeamModel> _logger;
 
         public CreateTeamModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            ILogger<TeamManagmentModel> logger,
+            ILogger<CreateTeamModel> logger,
             QuestionDbContext questionDbContext)
         {
             _questionDbContext = questionDbContext;
@@ -73,8 +73,10 @@ namespace stembowl.Areas.Identity.Pages.Account.Manage
             user.Team = team;
             user.TeamID = team.TeamID;
             await _userManager.UpdateAsync(user);
+            StatusMessage = $"You are now leader of team {team.TeamName}!";
+            _logger.LogInformation($"{team.TeamName} was created.");
 
-            return Page();
+            return RedirectToPage("AddMember");
         }
     }
 }
