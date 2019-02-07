@@ -15,7 +15,7 @@ using stembowl.Areas.Identity;
 
 namespace stembowl.Controllers
 {
-    [Authorize]        
+    [Authorize(Roles = "Faculty, Admin")]        
     public class QuestionsController : Controller
     { 
         List<Question> questions {get; set;}

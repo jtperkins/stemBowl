@@ -101,7 +101,7 @@ namespace stembowl
 
             var UserManager = serviceScope.ServiceProvider.GetService<UserManager<ApplicationUser>>();
 
-            string[] roleNames = { "Admin", "Student", "Faculty", "TeamLead" };
+            string[] roleNames = { "Admin", "Student", "Faculty", "Grader" };
 
             IdentityResult roleResult;
 
