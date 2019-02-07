@@ -1,0 +1,152 @@
+@model IEnumerable<Question>
+
+
+<hr />
+
+    <div class="row">
+        <!--<div class="col-2 border-right btn-primary" id="submitter-sort">Submitter</div>-->
+        <div class="col-2 border-right btn-secondary disabled">Question</div>
+        <div class="col-2 border-right btn-primary" id="format-sort">Format</div>
+        <div class="col-2 border-right btn-primary" id="category-sort">Category</div>
+        <div class="col btn-secondary disabled"></div>
+    </div>
+    <br />
+    <div id="questions">
+@foreach(var question in Model)
+{
+    <div class="row questions border-top" data-submitter=@question.SubmitterID data-format=@question.Format data-category=@question.Category>
+        @Html.HiddenFor(q => question.QuestionID)
+        <div class="col-2">
+        @Html.HiddenFor(q => question.SubmitterID) 
+        </div>
+        <div class="col-2 border-right">
+            @question.Text
+        </div>
+        <div class="col-2">
+            @switch(question.Format)
+            {
+                case Format.MultipleChoice: <span>Multiple Choice</span>
+                break;
+                case Format.TrueFalse: <span>True/False</span>
+                break;
+                case Format.ShortAnswer: <span>Short Answer</span>
+                break;
+                default: <span> Invalid/Format</span>
+                break;
+            }
+        </div>
+        <div class="col-2">
+            @question.Category
+        </div>
+        <button id="showAnswers" aria-expanded="false" aria-controls=a-@question.QuestionID data-toggle="collapse" data-target=#a-@question.QuestionID class="btn btn-secondary btn-sm">
+             Show/Hide answers</button> 
+            <div class="col collapse" id=a-@question.QuestionID>
+                <div class="col">
+                @foreach(var answer in question.Answers)
+                {
+                    <div class="row">
+                        <div class="col-1">
+                            @if(answer.Correct)
+                            {
+                                <span style="color:Green">&check;</span>
+                            }else
+                            {
+                                <span style="color:Red">&cross;</span>
+                            }
+                        </div>
+                        <div class="col">
+                            @answer.Text
+                        </div>
+                    </div>
+                }
+                </div>
+            </div>
+        <button class="btn btn-primary" id="AddQuestion" data-question-id=@question.QuestionID data-question-text=@question.Text>
+            Add
+        </button>
+    </div>
+}
+
+<div>
+    <div class="row">
+        Question
+    </div>
+    <div id="questions-add">
+    </div>
+    <form>
+    <input type="submit" name="Add" value="Add" formaction="Add" formmethod="Post" />
+    </form>
+</div>
+
+
+
+
+
+@section Scripts
+{
+<script>
+    $(document).ready(function () {
+        var questions =
+        {};
+
+        function getIds(q)
+        {
+            var ret = []
+            for(var key in questions)
+                ret.push(key);
+            return ret;
+        };
+
+        function genHtml(q)
+        {
+            var ret = '';
+            for(var key in q)
+            {
+                ret += '<div class="row mb-2"> <div class="col-3"> ' +
+                q[key] +
+                '</div> <button class="btn-danger col-2" id="RemoveQuestion" data-question-id=' +
+                key + '>Remove</button> </div>';
+            }
+            return ret;
+        };
+
+        $.post('@Url.Action("Add")', { questions : getIds(questions) },
+            function () {
+                $('#result').html('"Add()" successfully called.');
+        });
+
+        $('body').on('click', '#AddQuestion', function() {
+            questions[$(this).attr('data-question-id')] = $(this).attr('data-question-text');
+            $('#questions-add').html(genHtml(questions));
+        }); 
+
+        $('body').on('click', '#RemoveQuestion', function() {
+            delete questions[$(this).attr('data-question-id')];
+            $('#questions-add').html(genHtml(questions));
+        }); 
+
+        $('#format-sort').on('click', function() {
+            $toggle = !$toggle;
+            var sorted = $divs.sort( function (a,b) {
+                return $(a).attr('data-format') > $(b).attr('data-format') || $toggle;
+            });
+            $('#questions').html(sorted);
+        });
+        $('#category-sort').on('click', function() {
+            $toggle = !$toggle;
+            var sorted = $divs.sort( function (a,b) {
+                return $(a).attr('data-category') > $(b).attr('data-category') || $toggle;
+            });
+            $('#questions').html(sorted);
+        });
+        $('#submitter-sort').on('click', function() {
+            $toggle = !$toggle;
+            var sorted = $divs.sort( function (a,b) {
+                return $(a).attr('data-submitter') > $(b).attr('data-submitter') || $toggle;
+            });
+            $('#questions').html(sorted);
+        });
+
+    });
+</script>
+}
