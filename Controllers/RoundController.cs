@@ -48,7 +48,7 @@ namespace stembowl.Controllers
         public IActionResult Add(IEnumerable<string> questions)
         {
             //Todo : add to all applicable teamanswers
-            return Index();            
+            return RedirectToAction("Index");            
         }
     
     }
