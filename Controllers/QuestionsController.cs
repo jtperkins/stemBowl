@@ -34,7 +34,8 @@ namespace stembowl.Controllers
 
             questions = _context.Questions
                 .Where( e => e.SubmitterID == User.GetUserId())
-                .Include(e => e.Answers).ToList();
+                .Include(e => e.Answers)
+                .ToList();
             
             return View(questions);
         }

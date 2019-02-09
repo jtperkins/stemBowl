@@ -17,6 +17,9 @@
     var isAdmin = await userManager.IsInRoleAsync(
             currentUser,
             "Admin");
+    var isGrader = await userManager.IsInRoleAsync(
+        currentUser,
+        "Grader");
     var isFaculty = await userManager.IsInRoleAsync(
             currentUser,
             "Faculty");
@@ -40,6 +43,18 @@
                    Manage Questions
             </a>
         </li>
+        <li>
+            <a asp-controller="Round" asp-action="Index">
+                Manage Round
+            </a>
+        </li>
+    }else if(isGrader)
+    {
+        <li>
+            <a asp-controller="Round" asp-action="Index">
+                Manage Round
+            </a>
+        </li> 
     }
     else if(isFaculty)
     {

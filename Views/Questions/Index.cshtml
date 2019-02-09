@@ -37,29 +37,6 @@
         <div class="col-2">
             @question.Category
         </div>
-        <button id="showAnswers" aria-expanded="false" aria-controls=a-@question.QuestionID data-toggle="collapse" data-target=#a-@question.QuestionID class="btn btn-secondary btn-sm">
-             Show/Hide answers</button> 
-            <div class="col collapse" id=a-@question.QuestionID>
-                <div class="col">
-                @foreach(var answer in question.Answers)
-                {
-                    <div class="row">
-                        <div class="col-1">
-                            @if(answer.Correct)
-                            {
-                                <span style="color:Green">&check;</span>
-                            }else
-                            {
-                                <span style="color:Red">&cross;</span>
-                            }
-                        </div>
-                        <div class="col">
-                            @answer.Text
-                        </div>
-                    </div>
-                }
-                </div>
-            </div>
         <div class="col">
           <button type="button" class="btn btn-danger btn-sm float-right" data-toggle="modal" data-target="#m-@question.QuestionID">
           Delete

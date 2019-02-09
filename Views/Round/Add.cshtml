@@ -1,6 +1,5 @@
 @model IEnumerable<Question>
 
-
 <hr />
 
     <div class="row">
@@ -61,26 +60,48 @@
                 }
                 </div>
             </div>
-        <button class="btn btn-primary" id="AddQuestion" data-question-id=@question.QuestionID data-question-text=@question.Text>
+        <div class="col">
+            <button class="btn btn-success float-right" id="AddQuestion" data-question-id=@question.QuestionID data-question-text=@question.Text>
             Add
-        </button>
-    </div>
+            </button>
+        </div>
+       </div>
 }
-
+<div class="row">
+    <label>Number of questions :</label>
+    <select class="mr-3" id="AddNumber">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+    </select>
+    <label>Question Category :</label>
+    <select class="mr-3" id="AddCategory">
+        <option value="Any" selected="selected">Any</option>
+        <option value="Computer Science">Computer Science</option>
+        <option value="Biology">Biology</option>
+        <option value="Chemistry">Chemistry</option>
+        <option value="Physics">Physics</option>
+        <option value="Geology">Geology</option>
+    </select>
+    <button class="btn btn-primary" id="AddRandom">
+            Add Set
+    </button>
+</div>
+ 
 <div>
     <div class="row">
         Question
     </div>
     <div id="questions-add">
     </div>
-    <form>
+    <form id="AddForm">
     <input type="submit" name="Add" value="Add" formaction="Add" formmethod="Post" />
     </form>
 </div>
-
-
-
-
 
 @section Scripts
 {
@@ -110,9 +131,12 @@
             return ret;
         };
 
-        $.post('@Url.Action("Add")', { questions : getIds(questions) },
-            function () {
-                $('#result').html('"Add()" successfully called.');
+        $("#AddForm").submit( function(event) {
+            event.preventDefault();
+            $.post('@Url.Action("Add")', { questions : Object.keys(questions) },
+                window.location.replace("/Round/index")
+            );
+
         });
 
         $('body').on('click', '#AddQuestion', function() {

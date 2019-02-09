@@ -45,11 +45,42 @@ namespace stembowl.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(IEnumerable<string> questions)
+        public IActionResult Add(IEnumerable<int> questions)
         {
             //Todo : add to all applicable teamanswers
-            return RedirectToAction("Index");            
+            var answers = _context.Questions.Where(e => questions.Any(q => q == e.QuestionID));
+            var teams = _context.Teams;
+
+            var teamAnswers = new List<TeamAnswers>();
+            foreach (var team in teams)
+            {
+                foreach (var answer in answers)
+                {
+                    var teamAnswer = new TeamAnswers(answer, team);
+                    if(!_context.TeamAnswers.Contains(teamAnswer))
+                    {
+                        teamAnswers.Add(teamAnswer);
+                    }
+                }
+            }
+
+            _context.TeamAnswers.AddRange(teamAnswers);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
         }
-    
+
+        [HttpPost]
+        public ActionResult Delete(int questionID)
+        {
+            var questions = _context.TeamAnswers
+                .Where(e => e.QuestionID == questionID)
+                .ToList();
+            _context.RemoveRange(questions);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+   
     }
 }
