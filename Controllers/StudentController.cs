@@ -35,6 +35,7 @@ namespace stembowl.Controllers
             var question = _context.TeamAnswers
                 .Where(e => e.TeamID == user.TeamID)
                 .Include(e => e.Question)
+                .ThenInclude(q => q.Answers)
                 .Where(e => String.IsNullOrEmpty(e.Answer))
                 .FirstOrDefault();
 

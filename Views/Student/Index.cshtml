@@ -5,16 +5,18 @@
 
 <form action="/Student" method="post">
 
-
-
-    
-
     @Html.HiddenFor(e => e.TeamID)
     @Html.HiddenFor(e => e.QuestionID)
     @Html.HiddenFor(e => e.TeamAnswersID)
 
     @if(Model.Question.Format == Format.MultipleChoice )
     {
+        <!--<select class="col" id="Answer" name="Answer">-->
+        @foreach(var answer in Model.Question.Answers)
+        {
+            <button name="Answer" id="answer" type="submit" value=@answer.Text>@answer.Text</button>
+        }
+        <!--</select>-->
     
 
     }else if(Model.Question.Format == Format.TrueFalse)
@@ -24,10 +26,11 @@
             <option value="True" selected="selected">True</option>
             <option value="False">False</option>
         </select>
+        <button type="submit" class="btn btn-primary">Submit Answer</button>
     }
     else
     {
+        
 
     }
-    <button type="submit" class="btn btn-primary">Submit Answer</button>
 </form>
