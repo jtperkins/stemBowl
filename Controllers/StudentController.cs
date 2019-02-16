@@ -47,7 +47,7 @@ namespace stembowl.Controllers
 
         public IActionResult EndOfRound()
         {
-            return View();
+            return View();  
         }
 
         [HttpPost]
