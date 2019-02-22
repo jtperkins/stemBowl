@@ -42,7 +42,10 @@ namespace stembowl
             services.AddDbContext<QuestionDbContext>(
                 opt => opt.UseMySql(Configuration.GetConnectionString("connectionString"))
             );
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>(config =>
+            {
+                config.SignIn.RequireConfirmedEmail = true;
+            })
                 .AddEntityFrameworkStores<QuestionDbContext>()
                 .AddDefaultTokenProviders();
             services.Configure<IdentityOptions>(options =>
