@@ -7,12 +7,16 @@
 
 @inject SignInManager<ApplicationUser> signInManager
 @inject UserManager<ApplicationUser> userManager
-<div class="container">
+
     
 <hr />
 @if(signInManager.IsSignedIn(User))
 {
+    <div class="d-flex justify-content-center">
     <p>Hello @userManager.GetUserName(User)!</p>
+    </div>
+            
+
     
     var currentUser = await userManager.GetUserAsync(User);
     var isAdmin = await userManager.IsInRoleAsync(
@@ -27,10 +31,14 @@
     var isStudent = await userManager.IsInRoleAsync(
             currentUser,
             "Student");
+
+            
+            
             
     if(isAdmin)
     {
-
+        <div class="d-flex">
+        <ul class="list-inline mx-auto justify-content-center">
         <li>
             <a asp-controller="ManageUsers" asp-action="Index">
                    Manage Users
@@ -51,6 +59,8 @@
                 Manage Round
             </a>
         </li>
+        </ul>
+        </div>
     }else if(isGrader)
     {
         <li>
@@ -79,3 +89,4 @@
     }
 }
 </div>
+
