@@ -11,8 +11,8 @@
     
 @if(signInManager.IsSignedIn(User))
 {
-    <div class="jumbotron jumbrotron-fluid container-fluid col-sm-12">
-        <div class="container mt-4">
+    <div style="background-image: radial-gradient(#2193b0, #6dd5ed);" class="jumbotron jumbrotron-fluid container-fluid col-sm-12">
+        <div class="container mt-4 text-center">
             
             <h1 class="display-4">Hello, @userManager.GetUserName(User)!</h1>
             <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
@@ -21,6 +21,28 @@
             <p class="lead">
             <a tabindex="0" class="btn btn-primary btn-lg" href="#" role="button" data-toggle="popover" data-placement="right" data-trigger="focus" title="Not just yet..." data-content="The Stem Bowl hasn't quite started yet, check back again in a few weeks">Make a team</a>
             </p>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Special title treatment</h5>
+                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Special title treatment</h5>
+                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 }
