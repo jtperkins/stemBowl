@@ -1,18 +1,12 @@
-html {
-  font-size: 14px; }
-  @media (min-width: 768px) {
-    html {
-      font-size: 16px; } }
-  @media (min-width: 992px) {
-    html {
-      font-size: 18px; } }
-
 /*!
  * Bootstrap v4.2.1 (https://getbootstrap.com/)
  * Copyright 2011-2018 The Bootstrap Authors
  * Copyright 2011-2018 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
+
+
+
 :root {
   --blue: #007bff;
   --indigo: #6610f2;
