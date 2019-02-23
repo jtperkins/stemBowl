@@ -8,19 +8,7 @@
 @if(SignInManager.IsSignedIn(User))
 {
 
-    var currentUser = await UserManager.GetUserAsync(User);
-    var isAdmin = await UserManager.IsInRoleAsync(
-            currentUser,
-            "Admin");
-    var isGrader = await UserManager.IsInRoleAsync(
-        currentUser,
-        "Grader");
-    var isFaculty = await UserManager.IsInRoleAsync(
-            currentUser,
-            "Faculty");
-    var isStudent = await UserManager.IsInRoleAsync(
-            currentUser,
-            "Student");
+    
 
     
         
