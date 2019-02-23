@@ -9,99 +9,40 @@
 @inject UserManager<ApplicationUser> userManager
 
     
-
-<div class="jumbotron jumbrotron-fluid container-fluid col-sm-12">
-    <div class="container mt-4">
-        <h1 class="display-4">Hello, @userManager.GetUserName(User)!</h1>
-        <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-        <hr class="my-4">
-        <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-        <p class="lead">
-        <a tabindex="0" class="btn btn-primary btn-lg" href="#" role="button" data-toggle="popover" data-placement="right" data-trigger="focus" title="Not just yet..." data-content="The Stem Bowl hasn't quite started yet, check back again in a few weeks">Make a team</a>
-        </p>
-    </div>
-</div>
 @if(signInManager.IsSignedIn(User))
 {
-    
-
-    <!-- <div class="d-flex justify-content-center">
-    <p>Hello @userManager.GetUserName(User)!</p>
-    </div> -->
+    <div class="jumbotron jumbrotron-fluid container-fluid col-sm-12">
+        <div class="container mt-4">
             
-
-    
-    var currentUser = await userManager.GetUserAsync(User);
-    var isAdmin = await userManager.IsInRoleAsync(
-            currentUser,
-            "Admin");
-    var isGrader = await userManager.IsInRoleAsync(
-        currentUser,
-        "Grader");
-    var isFaculty = await userManager.IsInRoleAsync(
-            currentUser,
-            "Faculty");
-    var isStudent = await userManager.IsInRoleAsync(
-            currentUser,
-            "Student");
-
-            
-            
-            
-    if(isAdmin)
-    {
-        <!-- <div class="d-flex">
-        <ul class="list-inline mx-auto justify-content-center">
-        <li>
-            <a asp-controller="ManageUsers" asp-action="Index">
-                   Manage Users
-            </a>
-        </li>
-        <li>
-            <a asp-controller="Questions" asp-action="Index">
-                   Submit Questions
-            </a>
-        </li>
-        <li>
-            <a asp-controller="Questions" asp-action="GetAll">
-                   Manage Questions
-            </a>
-        </li>
-        <li>
-            <a asp-controller="Round" asp-action="Index">
-                Manage Round
-            </a>
-        </li>
-        </ul>
-        </div> -->
-    }else if(isGrader)
-    {
-        <li>
-            <a asp-controller="Round" asp-action="Index">
-                Manage Round
-            </a>
-        </li> 
-    }
-    else if(isFaculty)
-    {
-        <li>
-            <a asp-controller="Questions" asp-action="Index">
-                   SubmitQuestions
-            </a>
-        </li>
-    }
-    else
-    {
-        <p>Sorry, nothing here for you until the event!
-
-        If you are coming here to submit questions, please enter your code 
-                <a asp-area="Identity" asp-page="/Account/Manage/ChangeRole" title="Manage">
-                    here.
-                </a>
-        </p>
-    }
+            <h1 class="display-4">Hello, @userManager.GetUserName(User)!</h1>
+            <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+            <hr class="my-4">
+            <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+            <p class="lead">
+            <a tabindex="0" class="btn btn-primary btn-lg" href="#" role="button" data-toggle="popover" data-placement="right" data-trigger="focus" title="Not just yet..." data-content="The Stem Bowl hasn't quite started yet, check back again in a few weeks">Make a team</a>
+            </p>
+        </div>
+    </div>
 }
-</div>
+else
+{
+        // Jumbotron
+        <div class="jumbotron jumbrotron-fluid container-fluid col-sm-12">
+            <div class="container mt-4">
+                
+                <h1 class="display-4">Hello, looks like your new here!</h1>
+                <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+                <hr class="my-4">
+                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+                <p class="lead">
+                <a tabindex="0" class="btn btn-primary btn-lg" href="#" role="button" data-toggle="popover" data-placement="right" data-trigger="focus" title="Not just yet..." data-content="The Stem Bowl hasn't quite started yet, check back again in a few weeks">Make a team</a>
+                </p>
+            </div>
+        </div>
+}
+
+
+
 @section Scripts
 {
     <script>
