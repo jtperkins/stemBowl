@@ -20,18 +20,21 @@
         method="post" id="logoutForm" class="navbar-right form-inline">
             <ul class="navbar-nav">
                 <li class="navbar-item">
-                    
-                        </li>
-                        <li class="navbar-item">
-                            <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
-                                Hello @UserManager.GetUserName(User)
+                    <div class="dropdown-show">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Hello @UserManager.GetUserName(User)
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdownMenuLink">
+                            <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+                                    Manage account
                             </a>
-                        </li>
-                        <li class="navbar-item">
-                            <button type="submit" class="btn btn-link navbar-btn nav-link float-right">Logout</button>
-                        </li>
+                            <button type="submit" class="dropdown-item">Logout</button>
+                        </div>
+                    </div>
+                </li>
+                        
                     </ul>  
-            </form> 
+    </form> 
             
            
             
