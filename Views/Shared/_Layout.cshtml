@@ -149,7 +149,7 @@
         mywindow.scroll(function () {
             newscroll = mywindow.scrollTop();
             if (newscroll > mypos && !up) {
-                $('#nav').finish().slideUp(730);
+                $('#nav').finish().slideUp(400);
                 up = !up;
                 console.log(up);
             } else if(newscroll < mypos && up) {
