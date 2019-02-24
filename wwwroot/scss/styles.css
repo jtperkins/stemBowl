@@ -3256,7 +3256,10 @@ input[type="button"].btn-block {
   background-color: #fff;
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.125);
-  border-radius: 0.25rem; }
+  border-radius: 0.25rem;
+  -webkit-transition: -webkit-box-shadow 0.75s;
+  -moz-transition: -moz-box-shadow 0.75s;
+  transition: box-shadow 0.75s; }
   .card:hover {
     -webkit-box-shadow: -1px 9px 40px -12px rgba(0,0,0,0.75);
     -moz-box-shadow: -1px 9px 40px -12px rgba(0,0,0,0.75);
