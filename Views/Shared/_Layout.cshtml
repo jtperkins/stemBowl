@@ -8,7 +8,7 @@
     <environment include="Development">
         <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
         <link rel="stylesheet" href="~/scss/styles.css" />
-        
+        <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet"
@@ -56,48 +56,36 @@
                 <div class="container-fluid p-5">
             
                     <div class="row text-white text-center">
+                        <div class="col-md-4 mb-md-0 mb-3 text-center">
+                            <h5 class="text-uppercase">Contact Info</h5>
+                            <hr class="clearfix w-25 pb-3">
+                            <ul class="list-unstyled">
+                            <li>
+                                <p><i class="far fa-address-card"></i>  lorem ipsum</p>
+                            </li>
+                            <li>
+                                <p><i class="fas fa-at"></i>  Lorem Ipsum</p>
+                            </li>
+                            
+                            </ul>
+                        </div>
+                        
+                    <hr class="clearfix w-100 d-md-none pb-3">
                         <div class="col-md-4 mt-md-0 mt-3 mb-3">
                             <h5 class="text-uppercase">Footer Content</h5>
-                            <p>Here you can use rows and columns here to organize your footer content.</p>
+                            <hr class="clearfix w-50 pb-3">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed id faucibus justo. Vestibulum malesuada mattis convallis. In vitae nisl aliquam, feugiat arcu at, efficitur nisl. </p>
                         </div>
-                    <hr class="clearfix w-100 d-md-none pb-3">
-                    <div class="col-md-4 mb-md-0 mb-3 text-center">
-                        <h5 class="text-uppercase">Links</h5>
-
-                        <ul class="list-unstyled">
-                        <li>
-                            <a href="#!">Link 1</a>
-                        </li>
-                        <li>
-                            <a href="#!">Link 2</a>
-                        </li>
-                        <li>
-                            <a href="#!">Link 3</a>
-                        </li>
-                        <li>
-                            <a href="#!">Link 4</a>
-                        </li>
-                        </ul>
-                    </div>
                     <hr class="clearfix w-100 d-md-none pb-3">
                     <div class="col-md-4 mb-md-0 mb-3 text-center">
 
                         <!-- Links -->
                         <h5 class="text-uppercase">Links</h5>
-
+                        <hr class="clearfix w-25">
                         <ul class="list-unstyled">
-                        <li>
-                            <a href="#!">Link 1</a>
-                        </li>
-                        <li>
-                            <a href="#!">Link 2</a>
-                        </li>
-                        <li>
-                            <a href="#!">Link 3</a>
-                        </li>
-                        <li>
-                            <a href="#!">Link 4</a>
-                        </li>
+                            <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                         </ul>
 
                     </div>
