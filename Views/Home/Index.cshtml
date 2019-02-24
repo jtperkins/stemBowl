@@ -44,10 +44,10 @@
                 
                 <div class="container text-center">
                     
-                    <h1 class="display-4">Hello, @userManager.GetUserName(User)!</h1>
-                    <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+                    <h1 class="display-4">Welcome to the StemBowl!</h1>
+                    <p class="lead">If you are a student, you can go ahead and register if you'd like, but the StemBowl date is TBA</p>
                     <hr class="my-4">
-                    <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+                    <p>If you are faculty here to submit questions for the StemBowl, youre in the right place.</p>
                     <p class="lead">
                     <a tabindex="0" class="btn btn-primary btn-lg" href="#" role="button" data-toggle="popover" data-placement="right" data-trigger="focus" title="Not just yet..." data-content="The Stem Bowl hasn't quite started yet, check back again in a few weeks">Make a team</a>
                     </p>
@@ -149,7 +149,7 @@
                 <hr class="my-4">
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed id faucibus justo. Vestibulum malesuada mattis convallis. In vitae nisl aliquam, feugiat arcu at, efficitur nisl. Aenean ornare ex elit, id commodo nulla posuere vitae</p>
                 <p class="lead">
-                <a tabindex="0" class="btn btn-primary btn-lg" href="#" role="button" data-toggle="popover" data-placement="right" data-trigger="focus" title="Not just yet..." data-content="The Stem Bowl hasn't quite started yet, check back again in a few weeks">Make a team</a>
+                <button class="btn btn-primary btn-lg">Button</button>
                 </p>
             </div>
             <div class="col-sm-112 col-md-4 col-lg-4 m-auto text-center justify-content-center pt-4 mt-sm-4">
@@ -358,17 +358,17 @@ else
     <script>
     $(document).ready(function() {
 
-        $('.card').hover(
+        $('.col-sm-12').hover(
         // trigger when mouse hover
         function(){
-            $(this).animate({
+            $(this).children('.card').animate({
                 marginTop: "-=1%",
             },200);
         },
 
         // trigger when mouse out
         function(){
-            $(this).animate({
+            $(this).children('.card').animate({
                 marginTop: "0%"
             },200);
         }

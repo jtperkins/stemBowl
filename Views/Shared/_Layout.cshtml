@@ -134,7 +134,22 @@
                         "margin-bottom" : siteFooterHeight - 25
                     });
                 };
-});
+
+                
+            });
+        </script>
+        <script>
+            $(document).ready(
+                function () {
+                    $("#test").hover(
+                    function () {
+                    $(this).children('.dropdown-show').finish().slideDown('medium');
+                    }, 
+                function () {
+                    $(this).children('.dropdown-show').finish().slideUp('medium');
+                    }
+                )};
+            );
         </script>
         
 
